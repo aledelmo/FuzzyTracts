@@ -1,0 +1,52 @@
+import FreeSurfer.qry
+
+temporal.side |= (
+        (entorhinal.side or parahippocampal.side or temporalpole.side or
+         fusiform.side or superiortemporal.side or middletemporal.side or
+         inferiortemporal.side or transversetemporal.side or bankssts.side)  
+     )
+
+temporal_anterior_section.side |= temporal.side and anterior_of(amygdala.side)
+
+middlefrontalgyrus.side |= (
+    rostralmiddlefrontal.side or
+    caudalmiddlefrontal.side
+)
+inferiorfrontalgyrus.side |= (
+    parsopercularis.side or
+    parstriangularis.side or
+    parsorbitalis.side
+)
+orbitofrontalgyrus.side |= (
+    lateralorbitofrontal.side or
+    medialorbitofrontal.side
+)
+
+frontal.side |= (
+    superiorfrontal.side or
+    middlefrontalgyrus.side or
+    inferiorfrontalgyrus.side or
+    orbitofrontalgyrus.side or
+    frontalpole.side or
+    precentral.side or
+    paracentral.side
+)
+
+ventrolateral_prefrontal_cortex.side |= (
+	Inf_Lat_Vent.side or Cerebellum_Exterior.side or Cerebellum_Cortex.side
+)
+
+#Define bi-laterally the uncinate-fasciculus
+UF.side =  (
+#Catani
+	endpoints_in(temporal_anterior_section.side)
+	and orbitofrontalgyrus.side
+#Wakana
+	and temporal.side
+	and frontal.side
+#Leng(1)
+	and temporal.side
+	and superiortemporal.side
+	and orbitofrontalgyrus.side
+
+)

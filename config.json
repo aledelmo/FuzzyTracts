@@ -1,0 +1,33 @@
+{
+  "conf": {
+	"threshold": 0.55,
+	"atlas_path": "test_data/parcellation.nii.gz",
+	"labels_legend": "test_data/FreeSurfer.txt",
+	"out_format": "TRK",
+	"resampling": 15,
+	"WMQL_query": "test_data/WMQL/WMQL_query.qry",
+	"FA_map": "test_data/FA.nii.gz",
+	"diffusion_folder": "test_data/105115/"
+  },
+  "UF": [
+	{
+	  "anterior_of": [
+		"Right-Amygdala"
+	  ],
+	  "posterior_of": null,
+	  "superior_of": null,
+	  "inferior_of": [
+		"Right-Putamen",
+		"Right-Claustrum"
+	  ],
+	  "left_of": null,
+	  "right_of": null
+	},
+	{
+	  "lambdaA": 5,
+	  "lambdaB": 6,
+	  "lambdaW": 3,
+	  "lambdaM": 0.05
+	}
+  ]
+}
