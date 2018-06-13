@@ -4,7 +4,7 @@ import numpy as np
 
 
 def fast_shift3d(in_array, positions, padding=0):
-    out_array = np.empty_like(in_array)
+    out_array = np.zeros_like(in_array)
 
     pos0 = positions[0]
     pos1 = positions[1]
@@ -110,7 +110,7 @@ def fast_shift3d_parallel(in_array, positions, padding=0):
         pos1 = position[1]
         pos2 = position[2]
 
-        out_array = np.empty_like(in_array)
+        out_array = np.zeros_like(in_array)
 
         if pos0 >= 0 and pos1 >= 0 and pos2 >= 0:
             if pos0 == 0 and pos1 > 0 and pos2 > 0:
