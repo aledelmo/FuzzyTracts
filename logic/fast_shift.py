@@ -56,7 +56,7 @@ def fast_shift3d(in_array, positions, padding=0):
             out_array[pos0:, :pos1, :] = in_array[:-pos0, -pos1:, :]
             out_array[:pos0, pos1:, :] = padding
         elif pos0 == 0 and pos2 == 0:
-            out_array[:, :pos1, :] = in_array[:-pos0, -pos1:, :]
+            out_array[:, :pos1, :] = in_array[:, -pos1:, :]
             out_array[:, pos1:, :] = padding
         else:
             out_array[pos0:, :pos1, pos2:] = in_array[:-pos0, -pos1:, :-pos2]
@@ -158,7 +158,7 @@ def fast_shift3d_parallel(in_array, positions, padding=0):
                 out_array[pos0:, :pos1, :] = in_array[:-pos0, -pos1:, :]
                 out_array[:pos0, pos1:, :] = padding
             elif pos0 == 0 and pos2 == 0:
-                out_array[:, :pos1, :] = in_array[:-pos0, -pos1:, :]
+                out_array[:, :pos1, :] = in_array[:, -pos1:, :]
                 out_array[:, pos1:, :] = padding
             else:
                 out_array[pos0:, :pos1, pos2:] = in_array[:-pos0, -pos1:, :-pos2]
