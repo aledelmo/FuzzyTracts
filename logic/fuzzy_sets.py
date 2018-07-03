@@ -18,7 +18,7 @@ from itertools import islice
 from .varifolds import get_prototypes
 from dipy.viz.colormap import create_colormap
 from scipy.ndimage import generate_binary_structure
-from scipy.ndimage.morphology import binary_dilation
+from scipy.ndimage.morphology import binary_erosion
 from .streamlines_operations import streamlines_resample, streamlines_mapvolume, streamlines_sort
 
 try:
@@ -61,7 +61,7 @@ def compute_cone(mask, angle_dir):
     dims = mask.shape
 
     struct = generate_binary_structure(3, 3)
-    borders = np.logical_xor(mask, binary_dilation(mask, struct))
+    borders = np.logical_xor(mask, binary_erosion(mask, struct))
 
     dir_x = np.cos(angle_dir[1]) * np.cos(angle_dir[0])
     dir_y = np.cos(angle_dir[1]) * np.sin(angle_dir[0])
