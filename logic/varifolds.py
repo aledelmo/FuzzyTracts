@@ -3,17 +3,11 @@
 from __future__ import division
 
 import sys
-
 import numpy as np
-from builtins import range
 from numpy.linalg import norm
 from psutil import virtual_memory
 from six import itervalues
 
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass
 from itertools import count
 from sklearn.metrics.pairwise import pairwise_distances as pd_sk
 from .streamlines_operations import (streamlines_mapvolume, streamlines_clusters)

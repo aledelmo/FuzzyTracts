@@ -7,7 +7,7 @@ import sys
 import nibabel as nib
 import numpy as np
 from builtins import int
-from dipy.viz import fvtk
+from dipy.viz import window, actor
 from six import iteritems
 
 try:
@@ -16,7 +16,7 @@ except ImportError:
     pass
 from itertools import islice
 from .varifolds import get_prototypes
-from dipy.viz.colormap import create_colormap
+from fury.colormap import create_colormap
 from scipy.ndimage import generate_binary_structure
 from scipy.ndimage.morphology import binary_erosion
 from .streamlines_operations import streamlines_resample, streamlines_mapvolume, streamlines_sort
@@ -24,11 +24,11 @@ from .streamlines_operations import streamlines_resample, streamlines_mapvolume,
 try:
     from psutil import virtual_memory
     from joblib import Parallel, delayed, cpu_count
-    from fast_shift import fast_shift3d_parallel
+    from .fast_shift import fast_shift3d_parallel
 
     parallelize = True
 except ImportError:
-    from fast_shift import fast_shift3d
+    from .fast_shift import fast_shift3d
 
     parallelize = False
 
@@ -184,13 +184,13 @@ class SpatialFuzzySets:
 
         if self.show:
             colormap = create_colormap(np.linspace(0, 1, len(self.prototypes)), name='jet')
-            ren = fvtk.ren()
-            fvtk.clear(ren)
-            ren.SetBackground(0, 0, 0)
-            fvtk.camera(ren, (0, 70, 45))
-            fvtk.add(ren, fvtk.streamtube(self.streamlines, fvtk.colors.white, linewidth=0.1, opacity=0.4))
-            fvtk.add(ren, fvtk.streamtube(self.prototypes, colormap, linewidth=0.4))
-            fvtk.show(ren)
+            ren = window.Scene()
+            ren.clear()
+            ren.SetBackground(255, 255, 255)
+            ren.set_camera(position=(0, 70, 45))
+            ren.add(actor.streamtube(self.streamlines, (0., 0., 0.), linewidth=0.1, opacity=0.2))
+            ren.add(actor.streamtube(self.prototypes, colormap, linewidth=0.4))
+            window.show(ren)
 
     def segmentation(self, threshold):
 
@@ -220,22 +220,22 @@ class SpatialFuzzySets:
 
         if self.show:
             colormap = create_colormap(np.asarray(fuzzy_mapping), name='plasma')
-            ren = fvtk.ren()
-            fvtk.clear(ren)
+            ren = window.Scene()
+            ren.clear()
             ren.SetBackground(255, 255, 255)
-            fvtk.camera(ren, (0, 70, -10))
+            ren.set_camera(position=(0, 70, -10))
             for i, line in enumerate(self.streamlines):
-                fvtk.add(ren, fvtk.streamtube([line], colormap[i], linewidth=0.1))
-            fvtk.show(ren)
+                ren.add(actor.streamtube([line], colormap[i], linewidth=0.1))
+            window.show(ren)
 
-            fvtk.clear(ren)
+            ren.clear()
             for line in self.streamlines:
                 flag = [np.array_equal(fin, line) for fin in self.final]
                 if any(flag):
-                    fvtk.add(ren, fvtk.streamtube([line], fvtk.colors.blue, linewidth=0.2))
+                    ren.add(actor.streamtube([line], (0., 0., 1.), linewidth=0.2))
                 else:
-                    fvtk.add(ren, fvtk.streamtube([line], fvtk.colors.red, linewidth=0.1, opacity=0.1))
-            fvtk.show(ren)
+                    ren.add(actor.streamtube([line], (1., 0., 0.), linewidth=0.1, opacity=0.1))
+            window.show(ren)
 
     @property
     def final(self):
