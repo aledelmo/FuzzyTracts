@@ -1,91 +1,51 @@
 # Fuzzy Tracts
 
-Fuzzy Tracts is a tractograms segmentation tool that combines spatial information with a fuzzy sets approach!
+Streamlines selection with unsupervised clustering and fuzzy functional varifolds.
 
-  - Define the desired bundles.
-  - Choose your parameters (or use ours!)
-  - Set the segmentation threshold that best fits you.
-  - Done !!!
+![acs](https://i.imgur.com/GCzmyiO.jpg)
 
-For more information visit: <https://hal.archives-ouvertes.fr/hal-01744267/document> <br />
-Fuzzy Tracts is open source with a [public repository][gitlab] on GitLab.
+Polylines segmentation combining spatial fuzzy logic and clustering techniques. Streamlines coherence is evaluated using
+spatial fuzzy sets based on positional a priori. Similarity matrix between streamlines is built using the 
+following varifold formulation:
 
-Data from:
-[![HCP](https://wiki.humanconnectome.org/download/attachments/589826/global.logo?version=2&modificationDate=1326402585274&api=v2)](http://www.humanconnectomeproject.org/)
+![equation](http://www.sciweavers.org/tex2img.php?eq=%24%5Clangle%20C_X%2CC_Y%5Crangle%3De%5E%7B-%5Cfrac%7B%7C%7Cf_a-t_a%20%7C%7C%5E2%7D%7B%5Clambda%5E2_a%7D%7D%2Ae%5E%7B-%5Cfrac%7B%7C%7Cf_b-t_b%20%7C%7C%5E2%7D%7B%5Clambda%5E2_b%7D%7D%2A%5Csum_%7Bi%7D%5E%7BN%7D%5Csum_%7Bi%7D%5E%7BN%7D%5Be%5E%7B-%5Cfrac%7B%7C%7Cx_i-y_i%20%7C%7C%5E2%7D%7B%5Clambda%5E2_w%7D%7D%2Ae%5E%7B-%5Cfrac%7B%7C%7CFA_i-FA_j%20%7C%7C%5E2%7D%7B%5Clambda%5E2_m%7D%7D%2A%28%5Cfrac%7B%5Calpha%5ET_i%2A%5Cbeta_j%7D%7B%7C%5Calpha_i%7C%2A%7C%5Cbeta_j%7C%7D%29%5E2%2A%7C%5Calpha_i%7C%2A%7C%5Cbeta_j%7C%5D%24&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0[/img])
+
+DBSCAN is used to cluster streamlines and to select fibers prototypes. Prototypes are finally selected/discarded based
+on their fuzzy score.
+
+Method developed for the recognition of neural connections from MRI scans. Data from [Human Connectome Project](http://www.humanconnectomeproject.org/)
+
+If you use this work please cite:
+>**[White Matter Multi-resolution Segmentation using Fuzzy Theory](https://hal.archives-ouvertes.fr/hal-01983010/document)** *Alessandro Delmonte, Corentin Mercier, Johan Pallud, Isabelle Bloch and Pietro Gori.* ISBI 2019 - IEEE International Symposium on
+Biomedical Imaging, April 2019, Venice, IT.
+> 
+>**[Segmentation of White Matter Tractograms Using Fuzzy Spatial Relations](https://hal.archives-ouvertes.fr/hal-01744267/document)** *Alessandro Delmonte, Isabelle Bloch, Dominique Hasboun, Corentin Mercier, Johan Pallud and Pietro Gori.* OHBM 2018 -
+> Organization for Human Brain Mapping, June 2018, Singapore, SG.
 
 ## Installation and Usage.
 
-Enter in your freshly downloaded Fuzzy Tracts folder:
-```sh
-$ cd fuzzy_tracts
-```
+The project may use external tools. Check [WMQL](http://tract-querier.readthedocs.io/en/latest/#) and [MRTrix3](http://www.mrtrix.org/) guides for installation.
 
-Fuzzy tracts requires some dependencies to run smoothly. To install everything needed run from a terminal:
-```sh
+How to run:
+```shell
+$ cd FuzzyTracts
 $ pip install -r requirements.txt
-```
-
-Mandatory Python Dependencies: **Dipy**, **scikit-learn**, **scipy** <br />
-Highly suggested Python Dependencies: **joblib** <br />
-Python3 Compatibility Dependencies: **future** <br />
-Optional Python Dependencies: **Nipype**, **VTK** <br />
-Optional Software Dependencies:
-    **MRTrix3**: <http://www.mrtrix.org/>
-    **WMQL**: <http://tract-querier.readthedocs.io/en/latest/#>
-
-Configure the tool with your favourite text editor:
-```sh
 $ vim config.json
+$ python fuzzy_tracts.py <input_tractogram>
 ```
 
-Launch the tool:
-```sh
-$ python fuzzy_tracts.py input_tractogram
+Run the provided example with
+```shell
+
+$ python fuzzy_tracts.py test_data/input_test.vtk -fa -s -r
 ```
 
+## Contacts
 
-## Updates
+For any inquiries please contact: 
+[Alessandro Delmonte](https://aledelmo.github.io) @ [alessandro.delmonte@institutimagine.org](mailto:alessandro.delmonte@institutimagine.org)
 
-### New Features !!!
+## License
 
-  - Improved perfomance.
-  - Added native support for tck and vtk.
-
-### Todos:
-
- - fVar matrix approximation
- - Adding IFOF.
- 
-
-
-## Who's behind this!
-
-Fuzzy Tracts is currently being developed at [LTCI] lab in Télécom ParisTech.
-
-| Contributor | Personal Site |
-| ------ | ------ |
-| Alessandro Delmonte | Work in progress =) |
-| Isabelle Bloch | https://perso.telecom-paristech.fr/bloch/ |
-| Dominique Hasboun | ...|
-| Corentin Mercier | https://perso.telecom-paristech.fr/comercier/ |
-| Johan Pallud | http://www.ch-sainte-anne.fr/Offres-de-soins/Neuro-Sainte-Anne/Neuro-oncologie/Johan-PALLUD |
-| Pietro Gori | https://perso.telecom-paristech.fr/pgori/ |
-
-
-### Development.
-
-The tool is constantly updated with new functionalities.
-
-Want to contribute? <br />
-Please contact Alessandro (alessandro.delmonte@telecom-paristech.fr) or Pietro (pietro.gori@telecom-paristech.fr)
-
-
-
-License.
-----
-
-Apache License 2.0
-
-[//]: #
-   [gitlab]: <https://gitlab.telecom-paristech.fr/equipe-images/biomed/Segmentation_Tractography>
-   [LTCI]: <https://ltci.telecom-paristech.fr/>
+This project is licensed under the [Apache License 2.0](LICENSE) - see the [LICENSE](LICENSE) file for
+details
